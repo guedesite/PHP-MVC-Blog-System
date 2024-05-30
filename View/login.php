@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * @author           Pierre-Henry Soria <phy@hizup.uk>
  * @copyright        (c) 2015-2017, Pierre-Henry Soria. All Rights Reserved.

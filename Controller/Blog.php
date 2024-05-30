@@ -73,12 +73,32 @@ class Blog
         {
             if (isset($_POST['title'], $_POST['body']) && mb_strlen($_POST['title']) <= 50) // Allow a maximum of 50 characters
             {
-                $aData = array('title' => $_POST['title'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s'));
-
-                if ($this->oModel->add($aData))
-                    $this->oUtil->sSuccMsg = 'Hurray!! The post has been added.';
-                else
-                    $this->oUtil->sErrMsg = 'Whoops! An error has occurred! Please try again later.';
+                $file = $_FILES['file'];
+                $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                if(isset($_FILES['file']) && !empty($_FILES['file']) && !empty($file_extension)) {
+                    $file = $_FILES['file'];
+                    $upload_directory = 'images/';
+                    $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                    $new_file_name = uniqid('', true) . '.' . $file_extension;
+                    $target_file = $upload_directory . $new_file_name;
+                    move_uploaded_file($file['tmp_name'], $target_file);
+                    $aData = array(
+                        'title' => $_POST['title'],
+                        'body' => $_POST['body'],
+                        'created_date' => date('Y-m-d H:i:s'),
+                        'image' => $new_file_name
+                    );
+                    if ($this->oModel->addI($aData))
+                        $this->oUtil->sSuccMsg = 'Hurray!! The post has been added.';
+                    else
+                        $this->oUtil->sErrMsg = 'Whoops! An error has occurred! Please try again later.';
+                } else {
+                    $aData = array('title' => $_POST['title'], 'body' => $_POST['body'], 'created_date' => date('Y-m-d H:i:s'));
+                    if ($this->oModel->add($aData))
+                        $this->oUtil->sSuccMsg = 'Hurray!! The post has been added.';
+                    else
+                        $this->oUtil->sErrMsg = 'Whoops! An error has occurred! Please try again later.';
+                }
             }
             else
             {
@@ -120,7 +140,7 @@ class Blog
     {
         if (!$this->isLogged()) exit;
 
-        if (!empty($_POST['delete']) && $this->oModel->delete($this->_iId))
+        if ($this->oModel->delete($this->_iId))
             header('Location: ' . ROOT_URL);
         else
             exit('Whoops! Post cannot be deleted.');

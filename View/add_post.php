@@ -9,7 +9,7 @@
 <?php require 'inc/header.php' ?>
 <?php require 'inc/msg.php' ?>
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
 
     <p><label for="title">Title:</label><br />
         <input type="text" name="title" id="title" required="required" />
@@ -17,6 +17,10 @@
 
     <p><label for="body">Body:</label><br />
         <textarea name="body" id="body" rows="5" cols="35" required="required"></textarea>
+    </p>
+
+    <p><label for="body">Image:</label><br />
+    <input type="file" name="file" id="file">
     </p>
 
     <p><input type="submit" name="add_submit" value="Add" /></p>

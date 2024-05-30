@@ -17,6 +17,13 @@
 
         <h1><?=htmlspecialchars($this->oPost->title)?></h1>
         <p><?=nl2br(htmlspecialchars($this->oPost->body))?></p>
+
+        <?php if(isset($this->oPost->image)) { ?>
+
+        <p><img style="max-height:200px" src="<?=ROOT_URL?>?i=<?=$this->oPost->image?>" alt="<?=$this->oPost->image?>" /></p>
+
+        <?php } ?>
+
         <p class="left small italic">Posted on <?=$this->oPost->createdDate?></p>
 
         <?php

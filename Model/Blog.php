@@ -38,6 +38,12 @@ class Blog
         return $oStmt->execute($aData);
     }
 
+    public function addI(array $aData)
+    {
+        $oStmt = $this->oDb->prepare('INSERT INTO Posts (title, body, createdDate, image) VALUES(:title, :body, :created_date, :image)');
+        return $oStmt->execute($aData);
+    }
+
     public function getById($iId)
     {
         $oStmt = $this->oDb->prepare('SELECT * FROM Posts WHERE id = :postId LIMIT 1');
