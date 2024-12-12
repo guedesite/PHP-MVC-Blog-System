@@ -29,10 +29,12 @@ INSERT INTO Posts (title, body, createdDate) VALUES
 (@sPostTitle, @sPostBody, @sPostDate);
 
 
-CREATE TABLE IF NOT EXISTS Admins (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  email varchar(120) NOT NULL,
-  password char(60) NOT NULL,
+CREATE TABLE IF NOT EXISTS users (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  email varchar(128) NOT NULL,
+  username varchar(32) NOT NULL,
+  password varchar(128) NOT NULL,
+  token varchar(255) NOT NULL,
   PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8;
 
